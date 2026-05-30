@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Edder Utilities</title>
-  <style>
-    body { font-family: sans-serif; }
-    ul { list-style-type: none; padding-left: 20px; }
-    a { text-decoration: none; color: #0366d6; }
-  </style>
-</head>
-<body>
+<body style="display:none;">
+  <script>
+    const PASSWORD = "edderxalex123";
+
+    const entered = prompt("Enter password to access Edder Utilities:");
+
+    if (entered === PASSWORD) {
+      document.body.style.display = "block";
+    } else {
+      document.body.innerHTML = "<h1>❌ Access Denied</h1><p>Incorrect password.</p>";
+      document.body.style.display = "block";
+      throw new Error("Unauthorized");
+    }
+  </script>
+
   <h1>📁 Edder Utilities</h1>
-  <h3>This collection was created by Edder! This website works out your brain, making you less ed. <a href="https://github.com/S-PScripts/chromebook-utilities">here</a>. </h3>
-  <h3>Read the <a href="https://github.com/S-PScripts/chromebook-utilities/blob/main/Important/DISCLAIMER.md">disclaimer</a> before viewing this repo further. </h3>
-  <h4>If nothing loads, use the link above or try again later. </h4>
+  <h3>This collection was created by Edder! This website works out your brain, making you less ed. <a href="https://google.com/?igu=1">Source</a>.</h3>
+  <h3>Read the <a href="https://google.com/?igu=1">disclaimer</a> before viewing this repo further.</h3>
+  <h4>If nothing loads, ask Edder.</h4>
   <div id="file-tree">Loading...</div>
 
   <script>
@@ -33,6 +36,7 @@
       if (!Array.isArray(items)) return "";
 
       const ul = document.createElement("ul");
+
       for (const item of items) {
         const li = document.createElement("li");
 
@@ -44,8 +48,10 @@
           const rawURL = `${window.location.origin}/${item.path}`;
           li.innerHTML = `<a href="${rawURL}" target="_blank">📄 ${item.name}</a>`;
         }
+
         ul.appendChild(li);
       }
+
       return ul;
     }
 
@@ -56,4 +62,3 @@
     });
   </script>
 </body>
-</html>
