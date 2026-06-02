@@ -1,25 +1,54 @@
-<body style="display:none;">
+<body>
+  <!-- Password Screen -->
+  <div id="login-screen">
+    <h1>🔒 Edder Utilities</h1>
+    <p>Enter the password to continue:</p>
+
+    <input type="password" id="password-input" placeholder="Password">
+    <button onclick="checkPassword()">Enter</button>
+
+    <p id="error-message" style="color:red;"></p>
+  </div>
+
+  <!-- Main Content (hidden until password entered) -->
+  <div id="main-content" style="display:none;">
+    <h1>📁 Edder Utilities</h1>
+    <h3>
+      This collection was created by Edder! This website works out your brain,
+      making you less ed.
+      <a href="https://google.com/?igu=1">Source</a>.
+    </h3>
+    <h3>
+      Read the <a href="https://google.com/?igu=1">disclaimer</a>
+      before viewing this repo further.
+    </h3>
+    <h4>If nothing loads, ask Edder.</h4>
+
+    <div id="file-tree">Loading...</div>
+  </div>
+
   <script>
-    const PASSWORD = "edderxalex123";
+    const PASSWORD = "edderxalex";
 
-    const entered = prompt("Enter password to access Edder Utilities:");
+    function checkPassword() {
+      const entered = document.getElementById("password-input").value;
 
-    if (entered === PASSWORD) {
-      document.body.style.display = "block";
-    } else {
-      document.body.innerHTML = "<h1>❌ Access Denied</h1><p>Incorrect password.</p>";
-      document.body.style.display = "block";
-      throw new Error("Unauthorized");
+      if (entered === PASSWORD) {
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+      } else {
+        document.getElementById("error-message").textContent =
+          "❌ Incorrect password.";
+      }
     }
-  </script>
 
-  <h1>📁 Edder Utilities</h1>
-  <h3>This collection was created by Edder! This website works out your brain, making you less ed. <a href="https://google.com/?igu=1">Source</a>.</h3>
-  <h3>Read the <a href="https://google.com/?igu=1">disclaimer</a> before viewing this repo further.</h3>
-  <h4>If nothing loads, ask Edder.</h4>
-  <div id="file-tree">Loading...</div>
+    // Allow pressing Enter
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        checkPassword();
+      }
+    });
 
-  <script>
     const user = "S-PScripts";
     const repo = "chromebook-utilities";
     const branch = "main";
@@ -28,12 +57,13 @@
     async function fetchTree(path = "") {
       const url = apiBase + path;
       const response = await fetch(url);
-      if (!response.ok) {
-        return `<li>Error loading ${path}</li>`;
-      }
-      const items = await response.json();
 
-      if (!Array.isArray(items)) return "";
+      if (!response.ok) {
+        return document.createTextNode(`Error loading ${path}`);
+      }
+
+      const items = await response.json();
+      if (!Array.isArray(items)) return document.createTextNode("");
 
       const ul = document.createElement("ul");
 
